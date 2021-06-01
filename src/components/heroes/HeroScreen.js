@@ -2,6 +2,10 @@ import React, { useMemo } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { getHeroById } from '../../selectors/getHeroById';
 
+//import batman from '../../assets/heroes/dc-batman.jpg'; // Estático
+//const heroesImages = require.context('../../assets/heroes', true); // https://webpack.js.org/guides/dependency-management/#requirecontext
+import { heroesImages } from '../../helpers/heroesImages';
+
 export const HeroScreen = ( { history } ) => {
 
     // Hook para obtener los parametros de la url
@@ -37,7 +41,9 @@ export const HeroScreen = ( { history } ) => {
                 <img 
                     alt={ superhero } 
                     className="img-thumbnail animate__animated animate__fadeInLeft" 
-                    src={ `../assets/heroes/${heroId}.jpg` } 
+                    // src={ `../assets/heroes/${heroId}.jpg` } // desde public/assets
+                    //src={ batman } // import
+                    src={ heroesImages(`./${ heroId }.jpg`).default } 
                 />
             </div>
             <div className="col-8">
