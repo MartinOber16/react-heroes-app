@@ -1,6 +1,7 @@
 // https://gist.github.com/Klerith/566b484ac6fe46c8fa949e61df671a18
 import React, { useContext } from 'react'
-import { Link, NavLink, useHistory } from 'react-router-dom'
+// v6: useNavigate x useHistory
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../auth/authContext';
 import { types } from '../../types/types';
 
@@ -8,19 +9,18 @@ export const Navbar = () => {
 
     const { user, dispatch } = useContext( AuthContext );
 
-    // Hook de react para history
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const handleLogout = () => {
 
-        const action = {
-            type: types.logout,
-            payload: {},
-        }
+        localStorage.setItem('lastPath', window.location.pathname + window.location.search);
+        
+        navigate('/login');
 
-        dispatch( action );
+        dispatch({
+            type: types.logout
+        });
 
-        history.replace('/login');
     }
 
 
@@ -38,26 +38,29 @@ export const Navbar = () => {
                 <div className="navbar-nav">
 
                     <NavLink 
-                        activeClassName="active"
-                        className="nav-item nav-link" 
-                        exact
+                        // activeClassName="active"
+                        // className="nav-item nav-link" 
+                        className={ ({isActive}) => `nav-item nav-link ${isActive ? 'active' : ''}` }
+                        // exact
                         to="/marvel"
                     >
                         Marvel
                     </NavLink>
 
                     <NavLink 
-                        activeClassName="active"
-                        className="nav-item nav-link" 
-                        exact
+                        // activeClassName="active"
+                        // className="nav-item nav-link" 
+                        className={ ({isActive}) => `nav-item nav-link ${isActive ? 'active' : ''}` }
+                        // exact
                         to="/dc"
                     >
                         DC
                     </NavLink>
                     <NavLink 
-                        activeClassName="active"
-                        className="nav-item nav-link" 
-                        exact
+                        // activeClassName="active"
+                        // className="nav-item nav-link" 
+                        className={ ({isActive}) => `nav-item nav-link ${isActive ? 'active' : ''}` }
+                        // exact
                         to="/search"
                     >
                         Search

@@ -4,8 +4,13 @@ import { useLocation } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
 import { HeroCard } from '../heroes/HeroCard';
 import { getHeroesByName } from '../../selectors/getHeroesByName';
+// v6
+import { useNavigate } from 'react-router';
 
-export const SearchScreen = ( { history } ) => {
+// export const SearchScreen = ( { history } ) => {
+export const SearchScreen = () => {
+
+    const navigate = useNavigate();
 
     // hook que obtiene la location
     const location = useLocation();
@@ -23,7 +28,8 @@ export const SearchScreen = ( { history } ) => {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        history.push(`?q=${ searchValue }`);
+        // history.push(`?q=${ searchValue }`);
+        navigate(`?q=${ searchValue }`);
     }
 
     return (

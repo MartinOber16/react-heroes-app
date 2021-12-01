@@ -1,12 +1,16 @@
 import React, { useMemo } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+// v6: Navigate x Redirect 
+import { Navigate, useParams, useNavigate } from 'react-router-dom';
 import { getHeroById } from '../../selectors/getHeroById';
 
 //import batman from '../../assets/heroes/dc-batman.jpg'; // Estático
 //const heroesImages = require.context('../../assets/heroes', true); // https://webpack.js.org/guides/dependency-management/#requirecontext
 import { heroesImages } from '../../helpers/heroesImages';
 
-export const HeroScreen = ( { history } ) => {
+// export const HeroScreen = ( { history } ) => {
+export const HeroScreen = () => {
+
+    const navigate = useNavigate();
 
     // Hook para obtener los parametros de la url
     const { heroId } = useParams();
@@ -15,14 +19,16 @@ export const HeroScreen = ( { history } ) => {
     const hero = useMemo(() => getHeroById( heroId ), [ heroId ]);
 
     if( !hero ) {
-        return <Redirect to="/" />;
+        return <Navigate to="/" />;
     }
 
     const handleReturn = () => {
-        if( history.length <= 2 ) {
-            history.push('/');
+        if( navigate.length <= 2 ) {
+            // history.push('/');
+            navigate('/');
         } else {
-            history.goBack();
+            // history.goBack();
+            navigate.goBack();
         }
 
     }
