@@ -13,16 +13,14 @@ export const Navbar = () => {
 
     const handleLogout = () => {
 
-        localStorage.setItem('lastPath', window.location.pathname + window.location.search);
-        
-        navigate('/login');
-
         dispatch({
             type: types.logout
         });
-
+        
+        navigate('/login', {
+            replace: true
+        });
     }
-
 
     return (
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark">

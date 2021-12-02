@@ -5,7 +5,7 @@ import { useForm } from '../../hooks/useForm';
 import { HeroCard } from '../heroes/HeroCard';
 import { getHeroesByName } from '../../selectors/getHeroesByName';
 // v6
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 // export const SearchScreen = ( { history } ) => {
 export const SearchScreen = () => {

@@ -12,8 +12,7 @@ describe('Pruebas en <AppRouter />', () => {
         }
     }
 
-
-    test('debe de mostrar login si no está autenticado', () => {
+    test('debe de mostrar el login si no está autenticado', () => {
         
         const wrapper = mount(
             <AuthContext.Provider value={ contextValue }>
@@ -22,11 +21,12 @@ describe('Pruebas en <AppRouter />', () => {
         );
 
         expect( wrapper ).toMatchSnapshot();
+        expect( wrapper.find('h1').text().trim()).toBe('Login');
         
     });
 
 
-    test('debe de mostrar el componente marvel si está autenticado', () => {
+    test('debe de mostrar el componente Marvel si está autenticado', () => {
         
         const contextValue = {
             dispatch: jest.fn(),
@@ -42,11 +42,9 @@ describe('Pruebas en <AppRouter />', () => {
             </AuthContext.Provider>
         );
 
+        expect( wrapper ).toMatchSnapshot();
         expect( wrapper.find('.navbar').exists() ).toBe(true);
-        
-
+      
     })
     
-    
-
 })

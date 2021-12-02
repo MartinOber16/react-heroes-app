@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 // v6
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../auth/authContext';
 import { types } from '../../types/types';
 
@@ -25,7 +25,9 @@ export const LoginScreen = () => {
 
         // history.push('/');
         // history.replace(lastPath);
-        navigate(lastPath);
+        navigate(lastPath, {
+            replace: true
+        });
     }
 
     return (

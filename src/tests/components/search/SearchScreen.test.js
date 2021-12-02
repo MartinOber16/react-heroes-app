@@ -1,8 +1,14 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import { SearchScreen } from '../../../components/search/SearchScreen';
 
+const mockNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockNavigate,
+}));
 
 describe('Pruebas en <SearchScreen />', () => {
 
@@ -10,7 +16,7 @@ describe('Pruebas en <SearchScreen />', () => {
         
         const wrapper = mount(
             <MemoryRouter initialEntries={['/search']}>
-                <Route path="/search" component={ SearchScreen } />
+                 <SearchScreen />
             </MemoryRouter>
         );
 
@@ -23,7 +29,7 @@ describe('Pruebas en <SearchScreen />', () => {
         
         const wrapper = mount(
             <MemoryRouter initialEntries={['/search?q=batman']}>
-                <Route path="/search" component={ SearchScreen } />
+                <SearchScreen />
             </MemoryRouter>
         );
 
@@ -32,12 +38,11 @@ describe('Pruebas en <SearchScreen />', () => {
 
     })
 
-    
-    test('debe de mostrar un error si no se encuentra el Hero', () => {
+    test('debe de mostrar un error si no se encuentra el heroe', () => {
         
         const wrapper = mount(
             <MemoryRouter initialEntries={['/search?q=batman123']}>
-                <Route path="/search" component={ SearchScreen } />
+                <SearchScreen />
             </MemoryRouter>
         );
 
@@ -46,25 +51,17 @@ describe('Pruebas en <SearchScreen />', () => {
 
     })
     
-    
-    test('debe de llamar el push del history', () => {
-
-        const history = {
-            push: jest.fn()
-        };
+    test('debe de llamar el navigate a la nueva pantalla', () => {
 
         const wrapper = mount(
-            <MemoryRouter initialEntries={['/search?q=batman123']}>
-                <Route 
-                    path="/search" 
-                    component={ () => <SearchScreen history={ history } /> } 
-                />
+            <MemoryRouter initialEntries={['/search']}>
+                <SearchScreen />
             </MemoryRouter>
         );
 
         wrapper.find('input').simulate('change', {
             target: {
-                name: 'searchText',
+                name: 'searchValue',
                 value: 'batman'
             }
         });
@@ -73,13 +70,8 @@ describe('Pruebas en <SearchScreen />', () => {
             preventDefault(){}
         });
 
-        expect( history.push ).toHaveBeenCalledWith(`?q=batman`);
+        expect( mockNavigate ).toHaveBeenCalledWith(`?q=batman`);
 
-        
     })
-    
-
-    
-
     
 })

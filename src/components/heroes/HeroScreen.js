@@ -3,37 +3,26 @@ import React, { useMemo } from 'react';
 import { Navigate, useParams, useNavigate } from 'react-router-dom';
 import { getHeroById } from '../../selectors/getHeroById';
 
-//import batman from '../../assets/heroes/dc-batman.jpg'; // Estático
-//const heroesImages = require.context('../../assets/heroes', true); // https://webpack.js.org/guides/dependency-management/#requirecontext
-import { heroesImages } from '../../helpers/heroesImages';
-
 // export const HeroScreen = ( { history } ) => {
 export const HeroScreen = () => {
 
-    const navigate = useNavigate();
-
     // Hook para obtener los parametros de la url
     const { heroId } = useParams();
+    const navigate = useNavigate();
 
     //const hero = getHeroById( heroId )
     const hero = useMemo(() => getHeroById( heroId ), [ heroId ]);
 
+    const handleReturn = () => {
+        navigate( -1 );
+    }
+    
     if( !hero ) {
         return <Navigate to="/" />;
     }
 
-    const handleReturn = () => {
-        if( navigate.length <= 2 ) {
-            // history.push('/');
-            navigate('/');
-        } else {
-            // history.goBack();
-            navigate.goBack();
-        }
-
-    }
-
     const {
+        id,
         superhero,
         publisher,
         alter_ego,
@@ -41,15 +30,15 @@ export const HeroScreen = () => {
         characters,
     } = hero;
 
+    const imagePath = `/assets/heroes/${ id }.jpg`;
+
     return (
         <div className="row mt-5">
             <div className="col-4">
                 <img 
                     alt={ superhero } 
                     className="img-thumbnail animate__animated animate__fadeInLeft" 
-                    // src={ `../assets/heroes/${heroId}.jpg` } // desde public/assets
-                    //src={ batman } // import
-                    src={ heroesImages(`./${ heroId }.jpg`).default } 
+                    src={ imagePath }
                 />
             </div>
             <div className="col-8">

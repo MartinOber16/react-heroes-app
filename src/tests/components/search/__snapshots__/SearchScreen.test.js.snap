@@ -21,8 +21,9 @@ exports[`Pruebas en <SearchScreen /> debe de mostrar a Batman y el input con el 
       >
         <input
           autoComplete="off"
+          autoFocus={true}
           className="form-control"
-          name="searchText"
+          name="searchValue"
           onChange={[Function]}
           placeholder="Find your hero"
           type="text"
@@ -32,7 +33,7 @@ exports[`Pruebas en <SearchScreen /> debe de mostrar a Batman y el input con el 
           className="btn m-1 btn-block btn-outline-primary"
           type="submit"
         >
-          Search...
+          Search ...
         </button>
       </form>
     </div>
@@ -44,7 +45,7 @@ exports[`Pruebas en <SearchScreen /> debe de mostrar a Batman y el input con el 
       </h4>
       <hr />
       <div
-        className="card ms-3 animate__animated animate__fadeIn"
+        className="card ms-3"
         style={
           Object {
             "maxWidth": 540,
@@ -60,7 +61,7 @@ exports[`Pruebas en <SearchScreen /> debe de mostrar a Batman y el input con el 
             <img
               alt="Batman"
               className="card-img"
-              src="./assets/heroes/dc-batman.jpg"
+              src="/assets/heroes/dc-batman.jpg"
             />
           </div>
           <div
@@ -79,9 +80,7 @@ exports[`Pruebas en <SearchScreen /> debe de mostrar a Batman y el input con el 
               <p
                 className="card-text"
               >
-                 
                 Bruce Wayne
-                 
               </p>
               <p
                 className="card-text"
@@ -94,21 +93,12 @@ exports[`Pruebas en <SearchScreen /> debe de mostrar a Batman y el input con el 
                    
                 </small>
               </p>
-              <Link
-                to="./hero/dc-batman"
+              <a
+                href="/hero/dc-batman"
+                onClick={[Function]}
               >
-                <LinkAnchor
-                  href="/hero/dc-batman"
-                  navigate={[Function]}
-                >
-                  <a
-                    href="/hero/dc-batman"
-                    onClick={[Function]}
-                  >
-                    Más...
-                  </a>
-                </LinkAnchor>
-              </Link>
+                Mas ...
+              </a>
             </div>
           </div>
         </div>
@@ -118,7 +108,7 @@ exports[`Pruebas en <SearchScreen /> debe de mostrar a Batman y el input con el 
 </div>
 `;
 
-exports[`Pruebas en <SearchScreen /> debe de mostrar un error si no se encuentra el Hero 1`] = `
+exports[`Pruebas en <SearchScreen /> debe de mostrar un error si no se encuentra el heroe 1`] = `
 <div>
   <h1>
     Search Screen
@@ -139,8 +129,9 @@ exports[`Pruebas en <SearchScreen /> debe de mostrar un error si no se encuentra
       >
         <input
           autoComplete="off"
+          autoFocus={true}
           className="form-control"
-          name="searchText"
+          name="searchValue"
           onChange={[Function]}
           placeholder="Find your hero"
           type="text"
@@ -150,7 +141,7 @@ exports[`Pruebas en <SearchScreen /> debe de mostrar un error si no se encuentra
           className="btn m-1 btn-block btn-outline-primary"
           type="submit"
         >
-          Search...
+          Search ...
         </button>
       </form>
     </div>
@@ -193,8 +184,9 @@ exports[`Pruebas en <SearchScreen /> debe de mostrarse correctamente con valores
       >
         <input
           autoComplete="off"
+          autoFocus={true}
           className="form-control"
-          name="searchText"
+          name="searchValue"
           onChange={[Function]}
           placeholder="Find your hero"
           type="text"
@@ -204,7 +196,7 @@ exports[`Pruebas en <SearchScreen /> debe de mostrarse correctamente con valores
           className="btn m-1 btn-block btn-outline-primary"
           type="submit"
         >
-          Search...
+          Search ...
         </button>
       </form>
     </div>

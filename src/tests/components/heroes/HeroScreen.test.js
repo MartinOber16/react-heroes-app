@@ -1,108 +1,76 @@
 import React from 'react';
 import { mount } from 'enzyme'
 import { HeroScreen } from '../../../components/heroes/HeroScreen';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Routes, Route } from 'react-router-dom';
+
+const mockNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockNavigate,
+}));
 
 describe('Pruebas en <HeroScreen />', () => {
-
-    const history = {
-        length: 10,
-        push: jest.fn(),
-        goBack: jest.fn(),
-    }
     
-    test('debe de mostrar el componente redirect si no hay argumentos en el URL', () => {
+    test('no debe de mostrar el HeroScreen si no hay argumentos en el URL', () => {
         
         const wrapper = mount(
             <MemoryRouter initialEntries={['/hero']}>
-                <HeroScreen history={ history } />
+                <Routes>
+                    <Route path="/hero" element={ <HeroScreen /> } />
+                    <Route path="/" element={ <h1>No Hero Page</h1> } />
+                </Routes>
             </MemoryRouter>
         );
 
-        expect( wrapper.find('Redirect').exists() ).toBe(true);
+        expect( wrapper.find('h1').text().trim() ).toBe('No Hero Page');
 
     });
 
-    test('debe de mostrar un hero si el parámetro existe y se encuentra', () => {
+    test('debe de mostrar un heroe si el parámetro existe y se encuentra', () => {
         
-
         const wrapper = mount(
             <MemoryRouter initialEntries={['/hero/marvel-spider']}>
-                <Route path="/hero/:heroeId" component={ HeroScreen } />
+                <Routes>
+                    <Route path="/hero/:heroId" element={ <HeroScreen /> } />
+                    <Route path="/" element={ <h1>No Hero Page</h1> } />
+                </Routes>
             </MemoryRouter>
         );
 
         expect( wrapper.find('.row').exists() ).toBe(true);
         
-
     });
 
-    test('debe de regresar a la pantalla anterior con PUSH', () => {
-
-        const history = {
-            length: 1,
-            push: jest.fn(),
-            goBack: jest.fn(),
-        }
+    test('debe de regresar a la pantalla anterior', () => {
 
         const wrapper = mount(
             <MemoryRouter initialEntries={['/hero/marvel-spider']}>
-                <Route 
-                    path="/hero/:heroeId" 
-                    component={ () => <HeroScreen history={ history } /> }
-                />
+                <Routes>
+                    <Route path="/hero/:heroId" element={ <HeroScreen /> } />
+                </Routes>
             </MemoryRouter>
         );
         
         wrapper.find('button').prop('onClick')();
         
-        expect( history.push ).toHaveBeenCalledWith('/');
-        expect( history.goBack ).not.toHaveBeenCalled();
-
+        expect( mockNavigate ).toHaveBeenCalledWith(-1);
 
     });
 
-    test('debe de regresar a la pantalla anterior GOBACK', () => {
-        
+    test('debe de mostrar el No Hero Page si no tenemos un heroe', () => {
 
         const wrapper = mount(
-            <MemoryRouter initialEntries={['/hero/marvel-spider']}>
-                <Route 
-                    path="/hero/:heroeId" 
-                    component={ () => <HeroScreen history={ history } /> }
-                />
+            <MemoryRouter initialEntries={['/hero/marvel-spider-1234']}>
+                <Routes>
+                    <Route path="/hero/:heroId" element={ <HeroScreen /> } />
+                    <Route path="/" element={ <h1>No Hero Page</h1> } />
+                </Routes>
             </MemoryRouter>
         );
         
-        wrapper.find('button').prop('onClick')();
-        
-        expect( history.push ).toHaveBeenCalledTimes(0);
-        expect( history.goBack ).toHaveBeenCalled();
-
-    })
-
-
-    test('debe de llamar el redirect si el hero no existe', () => {
-
-        const wrapper = mount(
-            <MemoryRouter initialEntries={['/hero/marvel-spider123123123']}>
-                <Route 
-                    path="/hero/:heroeId" 
-                    component={ () => <HeroScreen history={ history } /> }
-                />
-            </MemoryRouter>
-        );
-        
-        expect( wrapper.text() ).toBe('');
-        
+        expect( wrapper.find('h1').text().trim() ).toBe('No Hero Page');
         
     })
-    
-    
-
-    
-    
-    
-
     
 })

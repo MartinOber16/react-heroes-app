@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 // import PropTypes from 'prop-types';
 // v6: Navigate x Redirect 
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../auth/authContext';
 
 // v5
@@ -28,6 +28,9 @@ export const PrivateRoute = ({ children }) => {
     // )
 
     const { user } = useContext(AuthContext);
+    const { pathname, search} = useLocation();
+
+    localStorage.setItem('lastPath', pathname + search);
 
     return user.logged
         ? children
